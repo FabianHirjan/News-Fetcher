@@ -26,20 +26,20 @@ root = tk.Tk()
 root.title("News Aggregator")
 root.geometry("600x400")
 
-# Label & Entry pentru subiect
+# Label & Entry for subject
 label_subject = tk.Label(root, text="Subiect de căutare:")
 label_subject.pack(pady=5)
 
 entry_subject = tk.Entry(root, width=40)
 entry_subject.pack(pady=5)
 
-# Buton de căutare
+# search button
 button_search = tk.Button(root, text="Caută", command=search_news)
 button_search.pack(pady=5)
 
-# Zonă de text pentru afișarea știrilor
+# Text area
 text_area = tk.Text(root, wrap=tk.WORD)
 text_area.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
 
-# Rulează aplicația
+# Run the app
 root.mainloop()
