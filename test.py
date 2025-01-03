@@ -1,25 +1,42 @@
-def combine_lists(*args):
-    # Determină lungimea maximă a listelor
-    max_length = max(len(lst) for lst in args)
-    result = []
-
-    # Iterează prin fiecare poziție
-    for i in range(max_length):
-        # Crează un tuplu pentru fiecare poziție
-        current_tuple = []
-        for lst in args:
-            # Adaugă elementul dacă există, altfel adaugă None
-            if i < len(lst):
-                current_tuple.append(lst[i])
-            else:
-                # Poți schimba None cu altceva dacă dorești
-                current_tuple.append(None)
-        result.append(tuple(current_tuple))
-
-    return result
+import sys
+import re
 
 
-# Exemplu de utilizare
-lists = [[1, 2, 3], [5, 6, 7], ["a", "b", "c"]]
-result = combine_lists(*lists)
-print(result)
+
+file_name = sys.argv[0]
+
+def read():
+    if len(sys.argv) < 2:
+        print("wrong number of parameters")
+        return
+
+  
+
+    try:
+        with open(file_name, "r") as file:
+            text = file.read()
+        numbers = re.findall(r'\b\w+\b', text)
+        sort_parameters(numbers)
+        return parameters
+    except: FileNotFoundError
+    print("The file doesn't exist")
+
+
+
+def sort_parameters(parameters):
+    a = parameters[0]
+    for i in range(1, parameters.length):
+        if parameters[i]%a < parameters[i+1]%a:
+            aux = parameters[i]
+            parameters[i+1] = parameters[i]
+            parameters[i] = aux
+    try:
+        with open(file_name, "w") as file:
+            text = file.write(parameters)
+    except: FileNotFoundError
+    return parameters
+
+
+
+if __name__ == '__main__':
+    read()
