@@ -21,6 +21,26 @@ def search_news():
             text_area.insert(tk.END, f"{idx}. {news_title}\n\n")
 
 
+def fetchGoogleNews():
+    """
+    Function to fetch news from Google News.
+    """
+    news_list = ["Google News 1", "Google News 2", "Google News 3"]
+    return news_list
+
+def fetchYahooNews():
+    """
+    Function to fetch news from Yahoo News.
+    """
+    news_list = ["Yahoo News 1", "Yahoo News 2", "Yahoo News 3"]
+    return news_list
+
+def fetchBingNews():
+    """
+    Function to fetch news from Bing News.
+    """
+    news_list = ["Bing News 1", "Bing News 2", "Bing News 3"]
+    return news_list
 
 root = tk.Tk()
 root.title("News Aggregator")
