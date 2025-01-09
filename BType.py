@@ -39,7 +39,7 @@ def fetch_overall_news():
 
 def search_news():
     """
-    Search by subject and fetch
+    Search by subject and fetch news from all sources.
     """
     subject = entry_subject.get().strip()
     if not subject:
@@ -52,8 +52,8 @@ def search_news():
 
     try:
         google_news_list = get_g_news(subject)
-        sky_news_list = get_sky_news()
-        nyt_news_list = get_nyt_news()
+        sky_news_list = get_sky_news(subject)
+        nyt_news_list = get_nyt_news(subject)
         cnn_news_list = get_cnn_news(subject)
 
         combined_news = google_news_list + sky_news_list + nyt_news_list + cnn_news_list
@@ -104,29 +104,47 @@ def get_top_g_news():
     return news_list
 
 
-def get_sky_news():
+def get_sky_news(subject=None):
     """
-    Fetch Sky News RSS feed.
+    Fetch Sky News RSS feed and optionally filter by subject.
     """
     url = "https://feeds.skynews.com/feeds/rss/home.xml"
     feed = feedparser.parse(url)
-    news_list = [
-        {'title': entry.title, 'source': 'Sky News', 'link': entry.link} 
-        for entry in feed.entries
-    ]
+    
+    news_list = []
+    for entry in feed.entries:
+        if subject:
+            title = entry.get('title', '').lower()
+            description = entry.get('description', '').lower()
+            if subject.lower() in title or subject.lower() in description:
+                news_item = {'title': entry.title, 'source': 'Sky News', 'link': entry.link}
+                news_list.append(news_item)
+        else:
+            news_item = {'title': entry.title, 'source': 'Sky News', 'link': entry.link}
+            news_list.append(news_item)
+    
     return news_list
 
 
-def get_nyt_news():
+def get_nyt_news(subject=None):
     """
-    Fetch New York Times RSS feed for Europe.
+    Fetch New York Times RSS feed.
     """
     url = "https://rss.nytimes.com/services/xml/rss/nyt/Europe.xml"
     feed = feedparser.parse(url)
-    news_list = [
-        {'title': entry.title, 'source': 'New York Times', 'link': entry.link} 
-        for entry in feed.entries
-    ]
+    
+    news_list = []
+    for entry in feed.entries:
+        if subject:
+            title = entry.get('title', '').lower()
+            description = entry.get('description', '').lower()
+            if subject.lower() in title or subject.lower() in description:
+                news_item = {'title': entry.title, 'source': 'New York Times', 'link': entry.link}
+                news_list.append(news_item)
+        else:
+            news_item = {'title': entry.title, 'source': 'New York Times', 'link': entry.link}
+            news_list.append(news_item)
+    
     return news_list
 
 
@@ -155,7 +173,6 @@ def get_cnn_news(subject=None):
         return news_list
     else:
         return []
-
 
 
 root = tk.Tk()
